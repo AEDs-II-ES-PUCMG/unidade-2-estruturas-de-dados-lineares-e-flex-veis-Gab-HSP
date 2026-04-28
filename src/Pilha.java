@@ -53,8 +53,44 @@ public class Pilha<E> {
 	 * @throws IllegalArgumentException se a pilha não contém numItens elementos.
 	 */
 	public Pilha<E> subPilha(int numItens) {
-		
-		// TODO
-		return null;
+		Pilha<E> subPilha = new Pilha<>();
+		Pilha<E> aux = new Pilha<>();
+		Celula<E> atual = topo;
+		int cont = 0;
+
+		while(atual != fundo && cont < numItens) {
+			aux.empilhar(atual.getItem());
+			cont++;
+			atual = atual.getProximo();
+		}
+
+		if(numItens > cont) {
+			throw new IllegalArgumentException("A pilha não possui elementos suficientes");
+		}
+
+		while(!aux.vazia()) {
+			subPilha.empilhar(aux.desempilhar());
+		}
+		return subPilha;
+	}
+
+	void imprimir() {
+		Celula<E> atual = topo;
+		while(atual != fundo) {
+			System.out.println(atual.getItem());
+			atual = atual.getProximo();
+		}
+	}
+
+	void imprimirCerto() {
+		Celula<E> atual = topo;
+		certo(atual);
+	}
+
+	void certo(Celula<E> atual) {
+		if(atual != fundo) {
+			certo(atual.getProximo());
+			System.out.println(atual.getItem());
+		}
 	}
 }
