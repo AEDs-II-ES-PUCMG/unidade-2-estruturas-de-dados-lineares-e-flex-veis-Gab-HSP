@@ -24,6 +24,9 @@ public class App {
     /** Pilha de pedidos */
     static Pilha<Pedido> pilhaPedidos = new Pilha<>();
 
+    /** Fila de pedidos */
+    static Fila<Pedido> filaPedidos = new Fila<>();
+
     static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -241,6 +244,22 @@ public class App {
         System.out.println("Pedido finalizado e armazenado com sucesso!");
     }
 
+    // Finalizar pedido com fila
+    public static void finalizarPedidoFila(Pedido pedido) {
+
+        cabecalho();
+
+        if (pedido == null) {
+            System.out.println("Nenhum pedido foi iniciado!");
+            return;
+        }
+
+        pilhaPedidos.empilhar(pedido);
+        filaPedidos.enfileirar(pedido);
+
+        System.out.println("Pedido finalizado e armazenado com sucesso!");
+    }
+
     public static void listarProdutosPedidosRecentes() {
 
         cabecalho();
@@ -272,6 +291,38 @@ public class App {
     public static void main(String[] args) {
 
         teclado = new Scanner(System.in, Charset.forName("UTF-8"));
+
+        System.out.println("=== TESTE FILA DE CARACTERES ===");
+
+        // Cria a fila
+        Fila<Character> filaCaracteres = new Fila<>();
+
+        // Insere seu nome (EXEMPLO: "ANA SILVA")
+        // 👉 TROQUE pelo seu nome real
+        String nome = "SEUNOMESEGUNDONOME";
+
+        for (int i = 0; i < nome.length(); i++) {
+            filaCaracteres.enfileirar(nome.charAt(i));
+        }
+
+        // Imprime a fila
+        System.out.println("Elementos da fila:");
+        filaCaracteres.imprimir();
+
+        // Teste de contagem
+        char letra = 'A'; // pode mudar
+        int ocorrencias = filaCaracteres.contarOcorrencias(letra);
+
+        System.out.println("Ocorrências de '" + letra + "': " + ocorrencias);
+
+        // Teste de desenfileirar
+        System.out.println("Removendo elemento: " + filaCaracteres.desenfileirar());
+
+        // Imprime novamente
+        System.out.println("Fila após desenfileirar:");
+        filaCaracteres.imprimir();
+
+        System.out.println("=== FIM DO TESTE ===");
 
         nomeArquivoDados = "produtos.txt";
         produtosCadastrados = lerProdutos(nomeArquivoDados);
